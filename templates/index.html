@@ -18,7 +18,7 @@
             font-size: 24;
             text-align: center;
         }
-        #molecule-name {
+        #molecule_name {
             background-color: black;
             color: black;
             cursor: pointer;
@@ -26,7 +26,7 @@
             border-radius: 4px;
             transition: color 0.3s;
         }
-      #molecule-name.revealed {
+      #molecule_name.revealed {
             color: white;
         }
     </style>
@@ -48,6 +48,6 @@
     <img src="{{ url_for('static', filename='molecule.png') }}" alt="Formule de la molécule">
     <br>
     <br>
-    <p>Il s'agit de <span id="molecule-name" onclick="revealName()">__________</span>. </p>
+    <p>Il s'agit de <span id="molecule_name" onclick="revealName()">__________</span>. </p>
 </body>
 </html>

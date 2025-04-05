@@ -132,4 +132,8 @@ def generate_image():
 
     img.save(os.path.join('static', 'molecule.png'), 'PNG')
 
+    with open(os.path.join('static', 'moleculename.txt'), 'w', encoding='utf-8') as f:
+        f.write(name)
+
+
 generate_image()

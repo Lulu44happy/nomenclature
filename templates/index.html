@@ -36,7 +36,7 @@
         fetch("/moleculename")
             .then(response => response.text())
             .then(name => {
-                const span = document.getElementById("molecule-name");
+                const span = document.getElementById("molecule_name");
                 span.textContent = name;
                 span.classList.add("revealed");
       });

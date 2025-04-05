@@ -6,8 +6,6 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     return render_template("index.html")  # Assurez-vous que index.html est dans le dossier templates
-
-@app.route("/generate")
 def generate():
     # Appel de la fonction de génération de l'image (qui doit être définie ailleurs)
     from generate import generate_image

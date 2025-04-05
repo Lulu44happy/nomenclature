@@ -1,25 +1,28 @@
-from flask import Flask, send_file
-from generate import generate_image
+from flask import Flask, render_template, send_file
 import os
 
 app = Flask(__name__)
 
 @app.route("/")
 def index():
-    generate_image()
-    return '''
-    <html>
-        <head><title>Nomenclature molécule</title></head>
-        <body>
-            <h1> Formule topologique : </h1>
-            <img src="/molecule" alt="formule topologique d'une molécule carbonée'" />
-        </body>
-    </html>
-    '''
+    return render_template("index.html")  # Assurez-vous que index.html est dans le dossier templates
+
+@app.route("/generate")
+def generate():
+    # Appel de la fonction de génération de l'image (qui doit être définie ailleurs)
+    from generate import generate_image
+    generate_image()  # Génère l'image et la sauve dans le dossier static
+    return "Image générée avec succès!"
 
 @app.route("/image")
 def image():
-    return send_file("static/output.png", mimetype="image/png")
+    # Envoie l'image générée située dans le dossier static
+    return send_file("static/molecule.png", mimetype="image/png")
+
+@app.route("/display")
+def display():
+    # Affiche le template HTML qui inclut l'image générée
+    return render_template("display.html")  # Assurez-vous que display.html est dans le dossier templates
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

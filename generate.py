@@ -136,5 +136,7 @@ def generate_image():
     from PIL import Image
     img = Image.open("drawing.ps")
     img.save("drawing.png", "PNG")
+
+    done()
     
 generate_image()

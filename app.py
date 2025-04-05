@@ -5,19 +5,19 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    generate_image()  # Génère l'image et la sauve dans le dossier static
-    return render_template("index.html")  # Assurez-vous que index.html est dans le dossier templates
+    generate_image()  
+    with open(os.path.join("static", "moleculename.txt"), "r") as f:
+        molecule_name = f.read().strip()
+    return render_template("index.html", molecule_name=molecule_name)  
 
 
 @app.route("/image")
 def image():
-    # Envoie l'image générée située dans le dossier static
     return send_file("static/molecule.png", mimetype="image/png")
 
 @app.route("/display")
 def display():
-    # Affiche le template HTML qui inclut l'image générée
-    return render_template("display.html")  # Assurez-vous que display.html est dans le dossier templates
+    return render_template("display.html") 
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

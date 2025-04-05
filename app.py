@@ -12,7 +12,7 @@ def index():
         <head><title>Nomenclature molécule</title></head>
         <body>
             <h1> Formule topologique : </h1>
-            <img src="/image" alt="formule topologique d'une moléule carbonée'" />
+            <img src="/molecule" alt="formule topologique d'une molécule carbonée'" />
         </body>
     </html>
     '''

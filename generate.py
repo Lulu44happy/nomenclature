@@ -1,11 +1,31 @@
+#-------------------------------------------------------------------------------
+# Name:        module1
+# Purpose:
+#
+# Author:      louis
+#
+# Created:     05/04/2025
+# Copyright:   (c) louis 2025
+# Licence:     <your licence>
+#-------------------------------------------------------------------------------
+
+def main():
+    pass
+
+if __name__ == '__main__':
+    main()
 from math import *
-from turtle import *
+from PIL import Image, ImageDraw
 from random import *
 from time import *
-from PIL import Image
 
 
 def generate_image():
+
+    ######################################################
+
+    img = Image.new('RGB', (400, 400), color='white')
+    draw = ImageDraw.Draw(img)
 
     #######################################################
 
@@ -13,63 +33,50 @@ def generate_image():
 
     #####################################################
 
-
-    TurtleScreen._RUNNING = True
-    screen = Screen()
-    screen.setup(width=400, height=400)
-    screen.bgcolor("white")
-
-    t = Turtle()
-    t.speed(0)
-    t.pensize(2)
-
-    #####################################################
-
     def drawmolecul(length,family,ethylpos,methylpos):
-      penup()
-      goto(-100,0)
-      pendown()
-      setheading(30)
-      for i in range(1,length):
-        forward(40)
-        setheading(-heading())
+      x=100
+      y=150
+      angle=30
+
+      for i in range(1, length):
+        # Calculer la nouvelle position en fonction de l'angle et de la longueur
+        x_new = x + 40 * cos(pi * angle / 180)  # Conversion de l'angle en radians
+        y_new = y + 40 * sin(pi * angle / 180)
+
+        # Dessiner la ligne de (x, y) à (x_new, y_new)
+        draw.line([x, y, x_new, y_new], fill="black", width=2)
+
+        # Mettre à jour la position actuelle
+        x, y = x_new, y_new
+
+        # Inverser l'angle (équivalent à setheading(-heading()))
+        angle = -angle
+
+
+
 
       if methylpos==2 or methylpos==4 or methylpos==6 or methylpos==8:
-          penup()
-          goto(-100+(methylpos-1)*(40*cos(pi/6)),sin(pi/6)*40)
-          setheading(90)
-          pendown()
-          forward(40)
+        draw.line([100+(methylpos-1)*(40*cos(pi/6)), 150+sin(pi/6)*40,100+(methylpos-1)*(40*cos(pi/6)),150+sin(pi/6)*40+40], fill="black", width=2)
 
       if methylpos==1 or methylpos==3 or methylpos==5 or methylpos==7:
-          penup()
-          goto(-100+(methylpos-1)*(40*cos(pi/6)),0)
-          setheading(-90)
-          pendown()
-          forward(40)
+        draw.line([100+(methylpos-1)*(40*cos(pi/6)), 150,100+(methylpos-1)*(40*cos(pi/6)),150-40], fill="black", width=2)
+
+
 
       if ethylpos==2 or ethylpos==4 or ethylpos==6 or ethylpos==8:
-          penup()
-          goto(-100+(ethylpos-1)*(40*cos(pi/6)),sin(pi/6)*40)
-          setheading(90)
-          pendown()
-          forward(40)
-          setheading(30)
-          forward(40)
+        draw.line([100+(ethylpos-1)*(40*cos(pi/6)), 150+sin(pi/6)*40,100+(ethylpos-1)*(40*cos(pi/6)),150+sin(pi/6)*40+40], fill="black", width=2)
+        draw.line([100+(ethylpos-1)*(40*cos(pi/6)),150+sin(pi/6)*40+40,(100+(ethylpos-1)*(40*cos(pi/6)))+40*cos(pi/6),150+sin(pi/6)*40+40+40*sin(pi/6)], fill="black", width=2)
+
 
       if ethylpos==1 or ethylpos==3 or ethylpos==5 or ethylpos==7:
-          penup()
-          goto(-100+(ethylpos-1)*(40*cos(pi/6)),0)
-          setheading(-90)
-          pendown()
-          forward(40)
-          setheading(-150)
-          forward(40)
+        draw.line([100+(ethylpos-1)*(40*cos(pi/6)), 150,100+(ethylpos-1)*(40*cos(pi/6)),150-40], fill="black", width=2)
+        draw.line([100+(ethylpos-1)*(40*cos(pi/6)),150-40,100+(ethylpos-1)*(40*cos(pi/6))-40*cos(pi/6),150-40-40*sin(pi/6)], fill="black", width=2)
+
+
 
     ###########################################################
 
-    hideturtle()
-    speed(0)
+
     l=randint(5,8)
 
 
@@ -126,17 +133,8 @@ def generate_image():
     ######################################################
 
     name=str(ethylposm)+isboth+str(methylposm)+alcans[l-1]+"e"
-    penup()
-    goto(0,-75)
-    write(name)
+    print(name)
+    img.save("molecule.png", "PNG")
 
-    canvas = screen.getcanvas()
-    canvas.postscript(file="drawing.ps")
 
-    from PIL import Image
-    img = Image.open("drawing.ps")
-    img.save("drawing.png", "PNG")
-
-    done()
-    
 generate_image()

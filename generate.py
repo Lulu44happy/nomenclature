@@ -130,11 +130,6 @@ def generate_image():
 
     name=str(ethylposm)+isboth+str(methylposm)+alcans[l-1]+"e"
 
-    # Définir le chemin où l'image sera sauvegardée dans le dossier static
-    image_path = os.path.join('static', 'molecule.png')
-
-    # Sauvegarder l'image dans static
-    image.save(image_path)
-
+    img.save(os.path.join('static', 'molecule.png'), 'PNG')
 
 generate_image()

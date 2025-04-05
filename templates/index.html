@@ -18,13 +18,36 @@
             font-size: 24;
             text-align: center;
         }
+        #molecule-name {
+            background-color: black;
+            color: black;
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 4px;
+            transition: color 0.3s;
+        }
+      #molecule-name.revealed {
+            color: white;
+        }
     </style>
+
+    <script>
+      function revealName() {
+        fetch("/moleculename")
+            .then(response => response.text())
+            .then(name => {
+                const span = document.getElementById("molecule-name");
+                span.textContent = name;
+                span.classList.add("revealed");
+      });
+  }
+</script>
 </head>
 <body>
     <h1>Formule topologique d'une molécule carbonée</h1>
     <img src="{{ url_for('static', filename='molecule.png') }}" alt="Formule de la molécule">
     <br>
     <br>
-    <p>Il s'agit de <strong> {{molecule_name}} </strong></p>
+    <p>Il s'agit de <span id="molecule-name" onclick="revealName()">__________</span>. </p>
 </body>
 </html>

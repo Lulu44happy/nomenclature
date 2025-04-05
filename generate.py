@@ -129,6 +129,12 @@ def generate_image():
     penup()
     goto(0,-75)
     write(name)
-    done()
 
+    canvas = screen.getcanvas()
+    canvas.postscript(file="drawing.ps")
+
+    from PIL import Image
+    img = Image.open("drawing.ps")
+    img.save("drawing.png", "PNG")
+    
 generate_image()

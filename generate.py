@@ -9,15 +9,11 @@
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
 
-def main():
-    pass
-
-if __name__ == '__main__':
-    main()
 from math import *
 from PIL import Image, ImageDraw
 from random import *
 from time import *
+import os
 
 
 def generate_image():
@@ -133,8 +129,12 @@ def generate_image():
     ######################################################
 
     name=str(ethylposm)+isboth+str(methylposm)+alcans[l-1]+"e"
-    print(name)
-    img.save("molecule.png", "PNG")
+
+    # Définir le chemin où l'image sera sauvegardée dans le dossier static
+    image_path = os.path.join('static', 'molecule.png')
+
+    # Sauvegarder l'image dans static
+    image.save(image_path)
 
 
 generate_image()

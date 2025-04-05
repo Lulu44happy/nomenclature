@@ -10,6 +10,10 @@ def index():
         molecule_name = f.read().strip()
     return render_template("index.html", molecule_name=molecule_name)  
 
+@app.route("/moleculename")
+def moleculename():
+    with open(os.path.join("static", "moleculename.txt"), "r", encoding="utf-8") as f:
+        return f.read()
 
 @app.route("/image")
 def image():

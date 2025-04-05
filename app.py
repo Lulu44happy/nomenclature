@@ -4,13 +4,14 @@ import os
 app = Flask(__name__)
 
 @app.route("/")
-def index():
-    return render_template("index.html")  # Assurez-vous que index.html est dans le dossier templates
 def generate():
     # Appel de la fonction de génération de l'image (qui doit être définie ailleurs)
     from generate import generate_image
     generate_image()  # Génère l'image et la sauve dans le dossier static
     return "Image générée avec succès!"
+def index():
+    return render_template("index.html")  # Assurez-vous que index.html est dans le dossier templates
+
 
 @app.route("/image")
 def image():

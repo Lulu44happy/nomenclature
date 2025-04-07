@@ -1,12 +1,12 @@
 #-------------------------------------------------------------------------------
-# Name:        module1
+# Name:        nomenclature
 # Purpose:
 #
-# Author:      louis
+# Author:      ouis-Ulysse Simonet
 #
 # Created:     05/04/2025
-# Copyright:   (c) louis 2025
-# Licence:     <your licence>
+# Copyright:   (c) Louis-Ulysse Simonet 2025
+# Licence:     MIT License
 #-------------------------------------------------------------------------------
 
 from math import *

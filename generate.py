@@ -101,11 +101,17 @@ def generate_image():
     invertedmethylpos=l+1-methylposm
     invertedethylpos=l+1-ethylposm
 
-    if invertedethylpos<ethylposm:
-        ethylposm=invertedethylpos
-        methylposm=invertedmethylpos
-    elif invertedmethylpos<methylposm and (ethylposm==0 or ethylposm==invertedethylpos):
-        methylposm=invertedmethylpos
+    if methylposm==0 or ethylposm==0:
+        if invertedmethylpos<methylposm:
+            methylposm=invertedmethylpos
+        if invertedethylpos<ethylposm:
+            ethylposm=invertedethylpos
+    else:
+        postot=int(str(ethylposm)+str(methylposm))
+        invertedpostot=int(str(invertedethylpos)+str(invertedmethylpos))
+        if invertedpostot<postot:
+            methylposm=invertedmethylpos
+            ethylposm=invertedethylpos
     #reversingprocess_end
 
 

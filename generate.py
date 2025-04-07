@@ -2,7 +2,7 @@
 # Name:        nomenclature
 # Purpose:
 #
-# Author:      ouis-Ulysse Simonet
+# Author:      Louis-Ulysse Simonet
 #
 # Created:     05/04/2025
 # Copyright:   (c) Louis-Ulysse Simonet 2025

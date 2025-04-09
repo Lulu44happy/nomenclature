@@ -22,7 +22,9 @@ def generate_image():
 
     img = Image.new('RGB', (400, 400), color='white')
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype("arial.ttf", size=20)
+
+    font_path = os.path.join("fonts", "DejaVuSans.ttf")
+    font = ImageFont.truetype(font_path, size=20)
 
     #######################################################
 

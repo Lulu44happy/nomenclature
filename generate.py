@@ -10,11 +10,11 @@
 #-------------------------------------------------------------------------------
 
 from math import *
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 from random import *
 from time import *
 import os
-
+import uuid
 
 def generate_image():
 
@@ -22,6 +22,7 @@ def generate_image():
 
     img = Image.new('RGB', (400, 400), color='white')
     draw = ImageDraw.Draw(img)
+    font = ImageFont.truetype("arial.ttf", size=20)
 
     #######################################################
 
@@ -29,7 +30,7 @@ def generate_image():
 
     #####################################################
 
-    def drawmolecul(length,family,ethylpos,methylpos):
+    def drawmolecul(length,family,ethylpos,methylpos,alcoolpos):
       x=100
       y=150
       angle=30
@@ -70,6 +71,14 @@ def generate_image():
 
 
 
+      if alcoolpos==2 or alcoolpos==4 or alcoolpos==6 or alcoolpos==8:
+        draw.line([100+(alcoolpos-1)*(40*cos(pi/6)), 150+sin(pi/6)*40,100+(alcoolpos-1)*(40*cos(pi/6)),150+sin(pi/6)*40+40], fill="black", width=2)
+        draw.text((100+(alcoolpos-1)*(40*cos(pi/6))-10,150+sin(pi/6)*40+40+10), "OH", fill="black", font=font)
+
+      if alcoolpos==1 or alcoolpos==3 or alcoolpos==5 or alcoolpos==7:
+        draw.line([100+(alcoolpos-1)*(40*cos(pi/6)), 150,100+(alcoolpos-1)*(40*cos(pi/6)),150-40], fill="black", width=2)
+        draw.text((100+(alcoolpos-1)*(40*cos(pi/6))-20,150-40-25), "OH", fill="black", font=font)
+
     ###########################################################
 
 
@@ -92,27 +101,91 @@ def generate_image():
       ethylposm=0
     #ethyl_end
 
-
-    #############
-    drawmolecul(l,0,ethylposm,methylposm)
-    #############
-
-    #reversingprocess_start
-    invertedmethylpos=l+1-methylposm
-    invertedethylpos=l+1-ethylposm
-
-    if methylposm==0 or ethylposm==0:
-        if invertedmethylpos<methylposm:
-            methylposm=invertedmethylpos
-        if invertedethylpos<ethylposm:
-            ethylposm=invertedethylpos
+    #alcool_start
+    isalcool=randint(0,1)
+    if isalcool==1:
+      alcoolposm=randint(1,l)
     else:
-        postot=int(str(ethylposm)+str(methylposm))
-        invertedpostot=int(str(invertedethylpos)+str(invertedmethylpos))
-        if invertedpostot<postot:
-            methylposm=invertedmethylpos
+      alcoolposm=0
+    #alcool_end
+
+    #solve conflicts_start
+    suppr=randint(0,1)
+    if alcoolposm==ethylposm:
+        if suppr==0:
+            alcoolposm=0
+        else:
+            ethylposm=0
+    if alcoolposm==methylposm:
+        if suppr==0:
+            alcoolposm=0
+        else:
+            methylposm=0
+    if methylposm==ethylposm:
+        if suppr==0:
+            ethylposm=0
+        else:
+            methylposm=0
+    #solve_conflicts_end
+
+
+    if alcoolposm!=0:
+        if methylposm!=0:
+            invertedmethylpos=l+1-methylposm
+        else:
+            invertedmethylpos=0
+        if ethylposm!=0:
+            invertedethylpos=l+1-ethylposm
+        else:
+            invertedethylpos=0
+
+        invertedalcoolpos=l+1-alcoolposm
+
+        if invertedalcoolpos<alcoolposm:
+            alcoolposm=invertedalcoolpos
             ethylposm=invertedethylpos
-    #reversingprocess_end
+            methylposm=invertedmethylpos
+        else:
+            if ethylposm*methylposm!=0:
+                postot=str(ethylposm)+str(methylposm)
+                invertedpostot=str(invertedethylpos)+str(invertedmethylpos)
+                if invertedpostot<postot:
+                    ethylposm=invertedethylpos
+                    methylposm=invertedmethylpos
+            else:
+                if invertedethylpos<ethylposm:
+                    ethylposm=invertedethylpos
+                elif invertedmethylpos<methylposm:
+                    methylposm=invertedmethylpos
+    else:
+        if methylposm!=0:
+            invertedmethylpos=l+1-methylposm
+        else:
+            invertedmethylpos=0
+        if ethylposm!=0:
+            invertedethylpos=l+1-ethylposm
+        else:
+            invertedethylpos=0
+
+        if ethylposm*methylposm!=0:
+            postot=str(ethylposm)+str(methylposm)
+            invertedpostot=str(invertedethylpos)+str(invertedmethylpos)
+            if invertedpostot<postot:
+                ethylposm=invertedethylpos
+                methylposm=invertedmethylpos
+        else:
+            if invertedethylpos<ethylposm:
+                ethylposm=invertedethylpos
+            elif invertedmethylpos<methylposm:
+                methylposm=invertedmethylpos
+
+
+    #############
+    drawmolecul(l,0,ethylposm,methylposm,alcoolposm)
+    #############
+
+
+
 
 
     #ethyl-methyl naming_start
@@ -132,9 +205,17 @@ def generate_image():
         isboth=""
     #ethyl-methyl naming_end
 
+    #alcool_naming_start
+    if alcoolposm==0:
+        alcoolname=""
+        end="e"
+    else:
+        alcoolname="-"+str(alcoolposm)+"-"
+        end="ol"
+
     ######################################################
 
-    name=str(ethylposm)+isboth+str(methylposm)+alcans[l-1]+"e"
+    name=str(ethylposm)+isboth+str(methylposm)+alcans[l-1]+alcoolname+end
 
     img.save(os.path.join('static', 'molecule.png'), 'PNG')
 

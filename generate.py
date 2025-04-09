@@ -219,10 +219,8 @@ def generate_image():
 
     name=str(ethylposm)+isboth+str(methylposm)+alcans[l-1]+alcoolname+end
 
-    img.save(os.path.join('static', 'molecule.png'), 'PNG')
-
-    with open(os.path.join('static', 'moleculename.txt'), 'w', encoding='utf-8') as f:
-        f.write(name)
+    img.save(os.path.join('static', name+".png"), 'PNG')
+    return name
 
 
 generate_image()

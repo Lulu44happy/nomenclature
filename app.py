@@ -18,9 +18,8 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     generate_image()  
-    with open(os.path.join("static", "moleculename.txt"), "r") as f:
-        molecule_name = f.read().strip()
-    return render_template("index.html", molecule_name=molecule_name)  
+    name = generate_image()  
+    return render_template("index.html", name=name)
 
 @app.route("/moleculename")
 def moleculename():

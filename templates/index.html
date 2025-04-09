@@ -33,19 +33,15 @@
 
     <script>
       function revealName() {
-        fetch("/moleculename")
-            .then(response => response.text())
-            .then(name => {
-                const span = document.getElementById("molecule_name");
-                span.textContent = name;
-                span.classList.add("revealed");
-      });
+    const span = document.getElementById("molecule_name");
+    span.textContent = "{{ name }}";
+    span.classList.add("revealed");
   }
 </script>
 </head>
 <body>
     <h1>Formule topologique d'une molécule carbonée</h1>
-    <img src="{{ url_for('static', filename='molecule.png') }}" alt="Formule de la molécule">
+    <img src="{{ url_for('static', filename=name + '.png') }}" alt="Formule de la molécule">
     <p>Il s'agit de <span id="molecule_name" onclick="revealName()">__________</span>. </p>
     <br>
     <div style="text-align: center;">

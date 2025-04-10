@@ -41,7 +41,7 @@ def generate_image():
 
     #####################################################
 
-    def drawmolecul(length,family,ethylpos,methylpos,alcoolpos):
+        def drawmolecul(length,family,ethylpos,methylpos,alcoolpos,doublelpos):
       x=100
       y=150
       angle=30
@@ -53,6 +53,21 @@ def generate_image():
 
         # Dessiner la ligne de (x, y) à (x_new, y_new)
         draw.line([x, y, x_new, y_new], fill="black", width=2)
+        if doublelpos==i:
+            if i==1 or i==3 or i==5 or i==7:
+                draw.line([x+4, y-4, x_new+5, y_new-3], fill="black", width=2)
+                if doublelpos!=1:
+                    draw.line([x+4, y-4, x, y-1], fill="black", width=2)
+                else:
+                    if alcoolpos==1 or alcoolpos==l:
+                        draw.line([x+4, y-4, x, y-1], fill="black", width=2)
+            else:
+                draw.line([x-3, y-3, x_new-3, y_new-3], fill="black", width=2)
+                if doublelpos!=1:
+                    draw.line([x_new-3, y_new-3, x_new, y_new], fill="black", width=2)
+                else:
+                    if alcoolpos==1 or alcoolpos==l:
+                        draw.line([x_new-3, y_new-3, x_new, y_new], fill="black", width=2)
 
         # Mettre à jour la position actuelle
         x, y = x_new, y_new
@@ -120,8 +135,21 @@ def generate_image():
       alcoolposm=0
     #alcool_end
 
+    #doublel_start
+    isdoublel=randint(0,1)
+    if isdoublel==1:
+      doublelposm=randint(1,l)
+    else:
+      doublelposm=0
+    #doublel_end
+
     #solve conflicts_start
     suppr=randint(0,1)
+    if alcoolposm*doublelposm!=0:
+        if suppr==1:
+            alcoolposm=0
+        else:
+            doublelposm=0
     if alcoolposm==ethylposm:
         if suppr==0:
             alcoolposm=0
@@ -138,6 +166,7 @@ def generate_image():
         else:
             methylposm=0
     #solve_conflicts_end
+
 
 
     if alcoolposm!=0:
@@ -191,11 +220,27 @@ def generate_image():
                 methylposm=invertedmethylpos
 
 
-    #############
-    drawmolecul(l,0,ethylposm,methylposm,alcoolposm)
-    #############
+    if doublelposm!=0:
+        inverteddoublelpos=l-doublelposm
+        if inverteddoublelpos<doublelposm:
+            if methylposm!=0:
+                invertedmethylpos=l+1-methylposm
+            else:
+                invertedmethylpos=0
+            if ethylposm!=0:
+                invertedethylpos=l+1-ethylposm
+            else:
+                invertedethylpos=0
+
+            ethylposm=invertedethylpos
+            methylposm=invertedmethylpos
+            doublelposm=inverteddoublelpos
 
 
+
+    #############
+    drawmolecul(l,0,ethylposm,methylposm,alcoolposm,doublelposm)
+    #############
 
 
 
@@ -217,16 +262,24 @@ def generate_image():
     #ethyl-methyl naming_end
 
     #alcool_naming_start
-    if alcoolposm==0:
-        alcoolname=""
-        end="e"
-    else:
-        alcoolname="-"+str(alcoolposm)+"-"
+    if alcoolposm!=0:
+        alcoolalcenename="-"+str(alcoolposm)+"-"
         end="ol"
+    #alcool_naming_end
+
+    #alcene_naming_start
+    if doublelposm!=0:
+        alcoolalcenename="-"+str(doublelposm)+"-"
+        end="ène"
+
+    if doublelposm==0 and alcoolposm==0:
+        alcoolalcenename=""
+        end="e"
+
 
     ######################################################
 
-    name=str(ethylposm)+isboth+str(methylposm)+alcans[l-1]+alcoolname+end
+    name=str(ethylposm)+isboth+str(methylposm)+alcans[l-1]+alcoolalcenename+end
 
     img.save(os.path.join('static', name+".png"), 'PNG')
     

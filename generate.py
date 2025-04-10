@@ -15,6 +15,15 @@ from random import *
 from time import *
 import os
 import uuid
+import glob
+
+def clean_old_images(max_images=35):
+    files = sorted(glob.glob("static/*.png"), key=os.path.getmtime)
+    for f in files[:-max_images]:
+        try:
+            os.remove(f)
+        except Exception as e:
+            print(f"Erreur lors de la suppression de {f} : {e}")
 
 def generate_image():
 
@@ -220,6 +229,8 @@ def generate_image():
     name=str(ethylposm)+isboth+str(methylposm)+alcans[l-1]+alcoolname+end
 
     img.save(os.path.join('static', name+".png"), 'PNG')
+    
+    clean_old_images()
     return name
 
 

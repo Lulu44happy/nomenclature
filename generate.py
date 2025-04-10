@@ -143,6 +143,11 @@ def generate_image():
 
     #solve conflicts_start
     suppr=randint(0,1)
+    if alcoolposm*doublelposm!=0:
+        if suppr==0:
+            alcoolposm=0
+        else:
+            doublelposm=0
     if alcoolposm==ethylposm:
         if suppr==0:
             alcoolposm=0

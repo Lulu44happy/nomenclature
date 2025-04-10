@@ -41,7 +41,7 @@ def generate_image():
 
     #####################################################
 
-        def drawmolecul(length,family,ethylpos,methylpos,alcoolpos,doublelpos):
+    def drawmolecul(length,family,ethylpos,methylpos,alcoolpos,doublelpos):
       x=100
       y=150
       angle=30

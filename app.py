@@ -16,20 +16,12 @@ from generate import generate_image
 app = Flask(__name__)
 import requests
 
-SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzYZEZHIQ1Xq1h-qEIaM3k6EL4FjebldTrjJqiE5-uzwfHj1v9jsrHzibxySUxf2PEd8w/exec"
-
-def get_counter():
-    response = requests.get(SCRIPT_URL + "?action=get")  # Demander la valeur actuelle
-    return response.text
 
 @app.route("/")
 def index():
-    counter = get_counter()
-    return render_template("index.html", name=name, counter=counter)
+    name=generate_image()
+    return render_template("index.html", name=name)
 
-@app.route("/increment")
-def increment_counter():
-    response = requests.post(SCRIPT_URL, data={'action': 'increment'})
 
 @app.route("/moleculename")
 def moleculename():

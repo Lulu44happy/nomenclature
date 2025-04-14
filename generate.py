@@ -31,12 +31,12 @@ def generate_image():
 
     img = Image.new('RGB', (400, 400), color='white')
     draw = ImageDraw.Draw(img)
-
-    font_path = os.path.join("fonts", "DejaVuSans.ttf")
-    font = ImageFont.truetype(font_path, size=20)
+    font = ImageFont.truetype("arial.ttf", size=20)
 
     #######################################################
+
     alcans=["méth","éth","prop","but","pent","hex","hept","oct"]
+
     #####################################################
 
     def drawmolecul(length,family,ethylpos,methylpos,alcoolpos,doublelpos):
@@ -56,16 +56,10 @@ def generate_image():
                 draw.line([x+4, y-4, x_new+5, y_new-3], fill="black", width=2)
                 if doublelpos!=1:
                     draw.line([x+4, y-4, x, y-1], fill="black", width=2)
-                else:
-                    if alcoolpos==1 or alcoolpos==l:
-                        draw.line([x+4, y-4, x, y-1], fill="black", width=2)
             else:
                 draw.line([x-3, y-3, x_new-3, y_new-3], fill="black", width=2)
                 if doublelpos!=1:
                     draw.line([x_new-3, y_new-3, x_new, y_new], fill="black", width=2)
-                else:
-                    if alcoolpos==1 or alcoolpos==l:
-                        draw.line([x_new-3, y_new-3, x_new, y_new], fill="black", width=2)
 
         # Mettre à jour la position actuelle
         x, y = x_new, y_new
@@ -125,29 +119,20 @@ def generate_image():
       ethylposm=0
     #ethyl_end
 
-    #alcool_start
-    isalcool=randint(0,1)
-    if isalcool==1:
-      alcoolposm=randint(1,l)
-    else:
-      alcoolposm=0
-    #alcool_end
+    # Decide randomly: 0 = neither, 1 = alcohol, 2 = double bond
+    feature_type = randint(0, 2)
 
-    #doublel_start
-    isdoublel=randint(0,1)
-    if isdoublel==1:
-      doublelposm=randint(1,l)
-    else:
-      doublelposm=0
-    #doublel_end
+    alcoolposm = 0
+    doublelposm = 0
+
+    if feature_type == 1:
+        alcoolposm = randint(1, l)
+    elif feature_type == 2:
+        doublelposm = randint(1, l)
+
 
     #solve conflicts_start
     suppr=randint(0,1)
-    if alcoolposm*doublelposm!=0:
-        if suppr==0:
-            alcoolposm=0
-        else:
-            doublelposm=0
     if alcoolposm==ethylposm:
         if suppr==0:
             alcoolposm=0
@@ -231,10 +216,25 @@ def generate_image():
         if invertedmethylpos<methylposm:
             methylposm=invertedmethylpos
 
+
+
+
     #############
     drawmolecul(l,0,ethylposm,methylposm,alcoolposm,doublelposm)
     #############
 
+    if doublelposm==0 and alcoolposm==0 and ethylposm!=0 and methylposm!=0 and int(str(l+1-ethylposm)+str(l+1-methylposm))<int(str(ethylposm)+str(methylposm)):
+        ethylposm=l+1-ethylposm
+        methylposm=l+1-methylposm
+
+    if doublelposm==0 and alcoolposm==0 and ethylposm==0 and methylposm!=0 and (l+1-methylposm)<methylposm:
+        methylposm=l+1-methylposm
+
+    if doublelposm==0 and alcoolposm==0 and ethylposm!=0 and methylposm==0 and (l+1-ethylposm)<ethylposm:
+        ethylposm=l+1-ethylposm
+
+    if ethylposm==methylposm:
+        methylposm=0
 
     #ethyl-methyl naming_start
     if methylposm==0:
@@ -270,6 +270,8 @@ def generate_image():
 
 
     ######################################################
+
+
 
     name=str(ethylposm)+isboth+str(methylposm)+alcans[l-1]+alcoolalcenename+end
 

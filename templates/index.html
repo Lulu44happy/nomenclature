@@ -48,8 +48,8 @@
         fetch("/counter")  // Envoie une requête à la route '/counter'
             .then(response => response.text())  // Récupère la réponse sous forme de texte
             .then(count => {
-                // Met à jour l'élément avec l'id 'molecule-count'
-                document.getElementById("molecule-count").textContent = count;
+                const correctedCount = Math.floor(count / 3);
+                document.getElementById("molecule-count").textContent = correctedCount;
             });
     }
 

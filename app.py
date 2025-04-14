@@ -23,7 +23,7 @@ def index():
 
 @app.route("/counter")
 def get_counter():
-    response = requests.get("https://script.google.com/macros/s/TON_URL/exec?action=get")
+    response = requests.get("https://script.google.com/macros/s/AKfycbzYZEZHIQ1Xq1h-qEIaM3k6EL4FjebldTrjJqiE5-uzwfHj1v9jsrHzibxySUxf2PEd8w/exec?action=get")
     return response.text
 
 

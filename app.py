@@ -18,14 +18,12 @@ import requests
 
 @app.route("/")
 def index():
-    increment_counter()
-    generate_image()  
     name = generate_image()  
     return render_template("index.html", name=name)
 
 @app.route("/counter")
 def get_counter():
-    response = requests.get("https://script.google.com/macros/s/TON_URL/exec")
+    response = requests.get("https://script.google.com/macros/s/TON_URL/exec?action=get")
     return response.text
 
 

@@ -47,18 +47,9 @@
     span.textContent = "{{ name }}";
     span.classList.add("revealed");
   }
-         fetch("/counter")
-        .then(response => response.text())
-        .then(count => {
-            document.getElementById("molecule_counter").textContent = count;
-        });
-
 </script>
 </head>
 <body>
-    <header>
-        <p>Déjà <span id="molecule_counter">{{ counter }}</span> molécules générées depuis le lancement du site !</p>
-    </header>
     <h1>Formule topologique d'une molécule carbonée</h1>
     <img src="{{ url_for('static', filename=name + '.png') }}" alt="Formule de la molécule">
     <p>Il s'agit de <span id="molecule_name" onclick="revealName()">__________</span>. </p>

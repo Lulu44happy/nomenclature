@@ -14,21 +14,6 @@ from flask import Flask, render_template, send_file
 import os
 from generate import generate_image
 app = Flask(__name__)
-counter_file = 'static/counter.txt'
-
-def get_counter():
-    if os.path.exists(counter_file):
-        with open(counter_file, 'r') as file:
-            counter = file.read()
-            return int(counter)
-    else:
-        return 0
-
-def increment_counter():
-    current_count = get_counter()
-    current_count += 1
-    with open(counter_file, 'w') as file:
-        file.write(str(current_count))
 
 @app.route("/")
 def index():
@@ -36,11 +21,6 @@ def index():
     generate_image()  
     name = generate_image()  
     return render_template("index.html", name=name)
-
-@app.route('/counter')
-def counter():
-    count = get_counter()  
-    return str(count)  
 
 @app.route("/moleculename")
 def moleculename():

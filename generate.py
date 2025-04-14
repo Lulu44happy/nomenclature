@@ -18,22 +18,6 @@ import uuid
 import glob
 import requests
 
-def increment_counter():
-    # Lire le fichier counter.txt pour obtenir le nombre actuel de molécules générées
-    try:
-        with open('static/counter.txt', 'r') as f:
-            counter = int(f.read().strip())
-    except FileNotFoundError:
-        counter = 0  # Si le fichier n'existe pas, on commence à 0
-
-    # Incrémente le compteur
-    counter += 1
-
-    # Sauvegarde le nouveau nombre dans counter.txt
-    with open('static/counter.txt', 'w') as f:
-        f.write(str(counter))
-
-
 
 def clean_old_images(max_images=35):
     files = sorted(glob.glob("static/*.png"), key=os.path.getmtime)

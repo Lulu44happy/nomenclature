@@ -47,21 +47,17 @@
     span.textContent = "{{ name }}";
     span.classList.add("revealed");
   }
-    function getMoleculeCount() {
-        fetch("/counter")  // Envoie une requête à la route '/counter'
-            .then(response => response.text())  // Récupère la réponse sous forme de texte
-            .then(count => {
-                const correctedCount = Math.floor(count / 3);
-                document.getElementById("molecule-count").textContent = correctedCount;
-            });
-    }
+         fetch("/counter")
+        .then(response => response.text())
+        .then(count => {
+            document.getElementById("molecule_counter").textContent = count;
+        });
 
-        window.onload = getMoleculeCount;
 </script>
 </head>
 <body>
     <header>
-        <p>Déjà <span id="molecule-count">...</span> molécules générées depuis le lancement du site !</p>
+        <p>Déjà <span id="molecule_counter">...</span> molécules générées depuis le lancement du site !</p>
     </header>
     <h1>Formule topologique d'une molécule carbonée</h1>
     <img src="{{ url_for('static', filename=name + '.png') }}" alt="Formule de la molécule">

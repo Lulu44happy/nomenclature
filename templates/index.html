@@ -57,7 +57,7 @@
 </head>
 <body>
     <header>
-        <p>Déjà <span id="molecule_counter">...</span> molécules générées depuis le lancement du site !</p>
+        <p>Déjà <span id="molecule_counter">{{ counter }}</span> molécules générées depuis le lancement du site !</p>
     </header>
     <h1>Formule topologique d'une molécule carbonée</h1>
     <img src="{{ url_for('static', filename=name + '.png') }}" alt="Formule de la molécule">

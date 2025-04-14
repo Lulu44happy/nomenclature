@@ -16,6 +16,7 @@ from time import *
 import os
 import uuid
 import glob
+import requests
 
 def increment_counter():
     # Lire le fichier counter.txt pour obtenir le nombre actuel de molécules générées
@@ -296,7 +297,7 @@ def generate_image():
 
     img.save(os.path.join('static', name+".png"), 'PNG')
 
-    increment_counter()
+    requests.post("https://script.google.com/macros/s/AKfycbzYZEZHIQ1Xq1h-qEIaM3k6EL4FjebldTrjJqiE5-uzwfHj1v9jsrHzibxySUxf2PEd8w/exec")
     clean_old_images()
     return name
 

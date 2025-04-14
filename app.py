@@ -14,6 +14,7 @@ from flask import Flask, render_template, send_file
 import os
 from generate import generate_image
 app = Flask(__name__)
+import requests
 
 @app.route("/")
 def index():
@@ -21,6 +22,12 @@ def index():
     generate_image()  
     name = generate_image()  
     return render_template("index.html", name=name)
+
+@app.route("/counter")
+def get_counter():
+    response = requests.get("https://script.google.com/macros/s/TON_URL/exec")
+    return response.text
+
 
 @app.route("/moleculename")
 def moleculename():

@@ -29,6 +29,13 @@
       #molecule_name.revealed {
             color: white;
         }
+        header {
+            background-color: #f5f5f5;
+            padding: 10px;
+            text-align: center;
+            font-size: 16px;
+            color: black;
+        }
     </style>
 
     <script>
@@ -37,9 +44,22 @@
     span.textContent = "{{ name }}";
     span.classList.add("revealed");
   }
+        function updateCounter() {
+            fetch("/counter")
+                .then(response => response.text())
+                .then(counter => {
+                    const span = document.getElementById("counter");
+                    span.textContent = counter;
+                });
+        }
+
+        window.onload = updateCounter;
 </script>
 </head>
 <body>
+    <header>
+        <p>Déjà <span id="counter"> molécules générées depuis le lancement du site !</span></p>
+    </header>
     <h1>Formule topologique d'une molécule carbonée</h1>
     <img src="{{ url_for('static', filename=name + '.png') }}" alt="Formule de la molécule">
     <p>Il s'agit de <span id="molecule_name" onclick="revealName()">__________</span>. </p>
